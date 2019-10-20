@@ -1,0 +1,19 @@
+.header {
+    width: 100%;
+    text-align: right;
+}
+
+.inner_wrapper {
+    width: 100%;
+    margin-top: 20px;
+    padding-right: 30px;
+}
+.form-wrapper {
+    width: 500px;
+    margin-left: 70px;
+}
+
+.form-control::after {
+    content: "*";
+    color: red;
+}

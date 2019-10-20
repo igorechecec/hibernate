@@ -1,0 +1,12 @@
+body {
+    background-color: #dedede;
+}
+.message {
+    font-size: 5rem;
+}
+.error-message {
+    font-size: 3rem;
+}
+.home-link {
+    font-size: 1.2rem;
+}

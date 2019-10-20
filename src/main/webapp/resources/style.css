@@ -1,0 +1,20 @@
+h1 {
+    color: red;
+}
+
+form {
+    margin: 40px auto 0;
+    width: 400px;
+}
+.wrapper {
+    margin: 40px auto 0;
+    width: 230px;
+}
+
+.logout_block{
+    margin-left: 22px;
+}
+
+.form-control {
+    margin-right: 20px;
+}

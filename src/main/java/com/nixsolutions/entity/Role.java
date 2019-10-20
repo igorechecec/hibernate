@@ -1,7 +1,18 @@
 package com.nixsolutions.entity;
 
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name="users")
 public class Role {
 
     /**
@@ -14,12 +25,17 @@ public class Role {
     /**
      * Id of field.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     /**
      * Name of role.
      */
     private String name;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<User> users;
 
     /**
      * Sets id of role.
@@ -55,6 +71,14 @@ public class Role {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}';
     }
 
     @Override

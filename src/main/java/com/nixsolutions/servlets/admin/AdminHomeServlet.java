@@ -1,5 +1,6 @@
 package com.nixsolutions.servlets.admin;
 
+import com.nixsolutions.dao.HibernateUserDao;
 import com.nixsolutions.dao.JdbcUserDao;
 import com.nixsolutions.entity.User;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class AdminHomeServlet extends HttpServlet {
             return;
         } else {
             req.setAttribute("user_name", req.getSession(false).getAttribute("auth_admin"));
-            JdbcUserDao userDao = new JdbcUserDao();
+            HibernateUserDao userDao = new HibernateUserDao();
             List<User> users = userDao.findAll();
             req.setAttribute("users_list", users);
             req.getRequestDispatcher("WEB-INF/jsp/users.jsp").forward(req, resp);
@@ -30,7 +31,7 @@ public class AdminHomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JdbcUserDao userDao = new JdbcUserDao();
+        HibernateUserDao userDao = new HibernateUserDao();
         List<User> users = userDao.findAll();
         req.setAttribute("users_list", users);
     }

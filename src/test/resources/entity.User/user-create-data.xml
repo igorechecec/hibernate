@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <testdb.users id="1" login="john@smith" pass="1234" email="john.smith@gmail.com" firstname="john"
+    <testdb.users id="1" login="john@smith" password="1234" email="john.smith@gmail.com" firstname="john"
                   lastname="smith" birthday="1999-01-01" role_id="1"/>
-    <testdb.users id="2" login="sara@millton" pass="abcd" email="sara.millton@gmail.com" firstname="sara"
+    <testdb.users id="2" login="sara@millton" password="abcd" email="sara.millton@gmail.com" firstname="sara"
                   lastname="millton" birthday="1985-01-01" role_id="2"/>
-    <testdb.users id="3" login="bill@booker" pass="12345" email="bill.booker@gmail.com" firstname="bille"
+    <testdb.users id="3" login="bill@booker" password="12345" email="bill.booker@gmail.com" firstname="bille"
                   lastname="booker" birthday="1996-01-20" role_id="2"/>
 </dataset>

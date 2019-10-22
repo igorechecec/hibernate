@@ -1,5 +1,6 @@
 package com.nixsolutions.servlets;
 
+import com.nixsolutions.dao.HibernateUserDao;
 import com.nixsolutions.dao.JdbcUserDao;
 import com.nixsolutions.dao.UserDao;
 import com.nixsolutions.entity.User;
@@ -25,8 +26,9 @@ public class LoginServlet extends HttpServlet {
         session.setMaxInactiveInterval(10*60);
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        JdbcUserDao userDao = new JdbcUserDao();
+        HibernateUserDao userDao = new HibernateUserDao();
         User user = userDao.findByLogin(login);
+        //System.out.println(user.getRole().getName());
         if (user != null && user.getPassword().equals(password)) {
             if (user.getRole().getName().equals("Admin")) {
                 session.setAttribute("auth_admin", user.getLogin());

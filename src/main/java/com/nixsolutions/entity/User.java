@@ -2,6 +2,8 @@ package com.nixsolutions.entity;
 
 import java.sql.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "testdb")
+@Proxy(lazy = false)
 public class User {
 
     /**
@@ -48,11 +52,13 @@ public class User {
     /**
      * Firstname of user.
      */
+    @Column(name = "firstname")
     private String firstName;
 
     /**
      * Lastname of user.
      */
+    @Column(name = "lastname")
     private String lastName;
 
     /**
@@ -63,7 +69,7 @@ public class User {
     /**
      * User's role.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
 

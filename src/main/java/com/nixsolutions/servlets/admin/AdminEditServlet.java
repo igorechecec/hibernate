@@ -1,5 +1,7 @@
 package com.nixsolutions.servlets.admin;
 
+import com.nixsolutions.dao.HibernateRoleDao;
+import com.nixsolutions.dao.HibernateUserDao;
 import com.nixsolutions.dao.JdbcRoleDao;
 import com.nixsolutions.dao.JdbcUserDao;
 import com.nixsolutions.dao.RoleDao;
@@ -22,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 public class AdminEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JdbcUserDao userDao = new JdbcUserDao();
+        HibernateUserDao userDao = new HibernateUserDao();
         if (req.getParameter("id") != null) {
             Long id = Long.valueOf(req.getParameter("id"));
             User user = userDao.findById(id);
@@ -49,8 +51,8 @@ public class AdminEditServlet extends HttpServlet {
             return;
         }
         HttpSession session = null;
-        RoleDao roleDao = new JdbcRoleDao();
-        UserDao userDao = new JdbcUserDao();
+        HibernateRoleDao roleDao = new HibernateRoleDao();
+        HibernateUserDao userDao = new HibernateUserDao();
         if (!req.getParameter("password").equals(req.getParameter("password-again"))) {
             session = req.getSession(false);
             session.setAttribute("error", "You passed different password!");

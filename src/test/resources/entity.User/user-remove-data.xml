@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <testdb.users id="1" login="john@smith" pass="1234" email="john.smith@gmail.com" firstname="john"
+    <testdb.users id="1" login="john@smith" password="1234" email="john.smith@gmail.com" firstname="john"
                   lastname="smith" birthday="1999-01-01" role_id="1"/>
 </dataset>

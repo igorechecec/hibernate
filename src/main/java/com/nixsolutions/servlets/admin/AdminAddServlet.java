@@ -1,5 +1,7 @@
 package com.nixsolutions.servlets.admin;
 
+import com.nixsolutions.dao.HibernateRoleDao;
+import com.nixsolutions.dao.HibernateUserDao;
 import com.nixsolutions.dao.JdbcRoleDao;
 import com.nixsolutions.dao.JdbcUserDao;
 import com.nixsolutions.dao.RoleDao;
@@ -33,8 +35,8 @@ public class AdminAddServlet extends HttpServlet {
             return;
         }
         HttpSession session = req.getSession(false);
-        RoleDao roleDao = new JdbcRoleDao();
-        UserDao userDao = new JdbcUserDao();
+        HibernateRoleDao roleDao = new HibernateRoleDao();
+        HibernateUserDao userDao = new HibernateUserDao();
         if (!req.getParameter("password").equals(req.getParameter("password-again"))) {
             session.setAttribute("error", "You passed different password!");
             resp.sendRedirect("/error");

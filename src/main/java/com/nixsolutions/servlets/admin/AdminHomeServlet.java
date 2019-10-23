@@ -1,7 +1,6 @@
 package com.nixsolutions.servlets.admin;
 
 import com.nixsolutions.dao.HibernateUserDao;
-import com.nixsolutions.dao.JdbcUserDao;
 import com.nixsolutions.entity.User;
 import java.io.IOException;
 import java.util.List;

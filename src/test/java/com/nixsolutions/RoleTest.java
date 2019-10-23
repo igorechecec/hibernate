@@ -1,35 +1,38 @@
 package com.nixsolutions;
 
 import com.nixsolutions.dao.HibernateRoleDao;
-import com.nixsolutions.dao.JdbcRoleDao;
 import com.nixsolutions.entity.Role;
+import com.nixsolutions.utils.HibernateUtils;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RoleTest extends DbTestConfig {
 
-    private HibernateRoleDao roleDao = new HibernateRoleDao();
+    private HibernateRoleDao roleDao;
     private IDataSet expectedData;
-
-    private final String TABLE = "testdb.roles";
-
-    public RoleTest() {}
+    private final String TABLE = "role";
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
-
-        beforeData = new FlatXmlDataSetBuilder().build(getClass().
-            getClassLoader().
-            getResourceAsStream("entity.Role/role-data.xml"));
+        roleDao = new HibernateRoleDao();
+        beforeData = new FlatXmlDataSetBuilder()
+            .build(Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("entity.Role/role-data.xml"));
         tester.setDataSet(beforeData);
         tester.onSetup();
 
+    }
+
+    @After
+    public void tearDown() throws Exception{
+        super.tearDown();
     }
 
     @Test
@@ -45,27 +48,6 @@ public class RoleTest extends DbTestConfig {
 
         IDataSet actualData = tester.getConnection().createDataSet();
         Assertion.assertEquals(expectedData.getTable(TABLE), actualData.getTable(TABLE));
-    }
-
-    @Test
-    public void testCreateTwoRoles() throws Exception {
-        Role role = new Role();
-        Role role1 = new Role();
-        role.setName("default");
-        role1.setName("admin1");
-        roleDao.create(role);
-        roleDao.create(role1);
-
-        expectedData = new FlatXmlDataSetBuilder()
-            .setCaseSensitiveTableNames(true).build(
-                getClass().getClassLoader()
-                    .getResourceAsStream("entity.Role/role-create2-data.xml"));
-
-        IDataSet actualData = tester.getConnection().createDataSet();
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedData.getTable("testdb.roles"),
-            actualData.getTable("testdb.roles"), ignore);
-
     }
 
     @Test
@@ -100,7 +82,6 @@ public class RoleTest extends DbTestConfig {
 
         IDataSet actualData = tester.getConnection().createDataSet();
         Assertion.assertEquals(expectedData.getTable(TABLE), actualData.getTable(TABLE));
-
     }
 
     @Test
@@ -113,5 +94,4 @@ public class RoleTest extends DbTestConfig {
         expectedRole.setName((String) table.getValue(1, "name"));
         Assert.assertEquals(expectedRole, actualRole);
     }
-
 }

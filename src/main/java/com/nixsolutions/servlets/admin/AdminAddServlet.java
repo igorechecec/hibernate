@@ -2,10 +2,6 @@ package com.nixsolutions.servlets.admin;
 
 import com.nixsolutions.dao.HibernateRoleDao;
 import com.nixsolutions.dao.HibernateUserDao;
-import com.nixsolutions.dao.JdbcRoleDao;
-import com.nixsolutions.dao.JdbcUserDao;
-import com.nixsolutions.dao.RoleDao;
-import com.nixsolutions.dao.UserDao;
 import com.nixsolutions.entity.User;
 import com.nixsolutions.utils.FormUtils;
 import java.io.IOException;

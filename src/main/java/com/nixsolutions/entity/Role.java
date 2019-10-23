@@ -2,19 +2,22 @@ package com.nixsolutions.entity;
 
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Proxy;
 
 
 @Entity
-@Table(name="roles", schema = "testdb")
-@Proxy(lazy = false)
+@Table(name="role")
+//@Proxy(lazy = false)
 public class Role {
 
     /**
@@ -34,9 +37,11 @@ public class Role {
     /**
      * Name of role.
      */
+    @Column
     private String name;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> users;
 
     /**

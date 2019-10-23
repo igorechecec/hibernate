@@ -30,6 +30,6 @@ public class Test {
 
         userDao.create(user);
 
-        //System.out.println(userDao.findByLogin("Velich").getLastName());
+        System.out.println(userDao.findByLogin("Velich").getLastName());
     }
 }

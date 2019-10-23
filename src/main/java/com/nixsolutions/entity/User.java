@@ -10,13 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "users", schema = "testdb")
+@Table(name = "user")
 @Proxy(lazy = false)
 public class User {
 
@@ -37,16 +36,19 @@ public class User {
     /**
      * Login of user.
      */
+    @Column
     private String login;
 
     /**
      * Password of user.
      */
+    @Column
     private String password;
 
     /**
      * Email of user.
      */
+    @Column
     private String email;
 
     /**
@@ -64,12 +66,13 @@ public class User {
     /**
      * Birthday of user.
      */
+    @Column
     private Date birthday;
 
     /**
      * User's role.
      */
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
 

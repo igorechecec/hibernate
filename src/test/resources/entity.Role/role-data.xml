@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <testdb.roles id="1" name="user"/>
-    <testdb.roles id="2" name="admin"/>
+    <role id="1" name="user"/>
+    <role id="2" name="admin"/>
 </dataset>

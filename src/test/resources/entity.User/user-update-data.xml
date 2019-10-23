@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <testdb.users id="1" login="john@smith" password="1234" email="john.smith@gmail.com" firstname="john"
+    <user id="1" login="john@smith" password="1234" email="john.smith@gmail.com" firstname="john"
                   lastname="smith" birthday="1999-01-01" role_id="1"/>
-    <testdb.users id="2" login="bill@booker" password="12345" email="bill.booker@gmail.com" firstname="bille"
+    <user id="2" login="bill@booker" password="12345" email="bill.booker@gmail.com" firstname="bille"
                   lastname="booker" birthday="1996-01-20" role_id="2"/>
 </dataset>

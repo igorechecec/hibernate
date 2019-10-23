@@ -8,10 +8,13 @@ import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-/**
- * Created by ADMIN on 20.10.2019.
- */
-public class HibernateUserDao implements UserDao{
+public class HibernateUserDao extends AbstractDao implements UserDao {
+
+
+
+    public HibernateUserDao() {
+        HibernateUtils.getSessionFactory();
+    }
 
     /**
      * Add new user.
@@ -26,6 +29,7 @@ public class HibernateUserDao implements UserDao{
             session.save(user);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }

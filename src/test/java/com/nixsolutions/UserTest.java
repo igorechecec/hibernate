@@ -1,8 +1,6 @@
 package com.nixsolutions;
 
-import com.nixsolutions.dao.HibernateRoleDao;
 import com.nixsolutions.dao.HibernateUserDao;
-import com.nixsolutions.dao.JdbcUserDao;
 import com.nixsolutions.entity.Role;
 import com.nixsolutions.entity.User;
 import java.sql.Date;
@@ -11,7 +9,6 @@ import java.util.List;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,30 +16,32 @@ import org.junit.Test;
 
 public class UserTest extends DbTestConfig {
 
-    private HibernateUserDao userDao = new HibernateUserDao();
+    private HibernateUserDao userDao;
     private IDataSet expectedData;
-    private final String TABLE = "testdb.users";
+    private final String TABLE = "user";
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
-
-        beforeData = new FlatXmlDataSetBuilder().build(getClass()
-            .getClassLoader().getResourceAsStream("entity.User/user-data.xml"));
+        userDao = new HibernateUserDao();
+        beforeData = new FlatXmlDataSetBuilder().build(Thread.currentThread()
+            .getContextClassLoader().getResourceAsStream("entity.User/user-data.xml"));
         tester.setDataSet(beforeData);
         tester.onSetup();
     }
 
     @After
-    public void getTearDownOperation() throws Exception {
-        DatabaseOperation.CLEAN_INSERT.execute(tester.getConnection(), beforeData);
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
     @Test
     public void testCreateUser() throws Exception {
-        User user = new User();
+        User user;
         Role role = new Role();
-        //role.setName("admin");
+
+        role.setId(2);
+        role.setName("admin");
         Object[] param = {(long) 2, "bill@booker", "12345", "bill.booker@gmail.com",
             "bille", "booker", Date.valueOf("1996-01-20"), role};
 
@@ -54,8 +53,8 @@ public class UserTest extends DbTestConfig {
             .setCaseSensitiveTableNames(true).build(
                 getClass().getClassLoader()
                     .getResourceAsStream("entity.User/user-create-data.xml"));
-
-        Assertion.assertEquals(expectedData.getTable(TABLE), actualData.getTable(TABLE));
+        String[] ignore = {"id", "role_id"};
+        Assertion.assertEqualsIgnoreCols(expectedData.getTable(TABLE), actualData.getTable(TABLE), ignore);
     }
 
     @Test
@@ -102,16 +101,11 @@ public class UserTest extends DbTestConfig {
         Role role1 = new Role();
         role1.setId(2);
         role1.setName("admin");
-        HibernateRoleDao roleDao = new HibernateRoleDao();
-        roleDao.create(role);
-        roleDao.create(role1);
         Object[] params = {(long) 1, "john@smith", "1234", "john.smith@gmail.com",
             "john", "smith", Date.valueOf("1999-01-01"), role};
         Object[] params1 = {(long) 2, "sara@millton", "abcd", "sara.millton@gmail.com",
             "sara", "millton", Date.valueOf("1985-01-01"), role1};
         List<User> expectedUsers = getListOfExpectedUsers();
-        userDao.create(createExpectedUser(params));
-        userDao.create(createExpectedUser(params1));
         List<User> actualUsers = userDao.findAll();
 
         Assert.assertEquals(expectedUsers, actualUsers);

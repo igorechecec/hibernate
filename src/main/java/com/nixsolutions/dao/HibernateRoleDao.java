@@ -6,8 +6,11 @@ import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class HibernateRoleDao implements RoleDao {
+public class HibernateRoleDao extends AbstractDao implements RoleDao {
 
+    public HibernateRoleDao() {
+        HibernateUtils.getSessionFactory();
+    }
     /**
      * Creates new role.
      *

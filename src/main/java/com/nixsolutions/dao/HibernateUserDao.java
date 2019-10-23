@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class HibernateUserDao extends AbstractDao implements UserDao {
+public class HibernateUserDao implements UserDao {
 
-
+    private SessionFactory sessionFactory;
 
     public HibernateUserDao() {
-        HibernateUtils.getSessionFactory();
+        sessionFactory = HibernateUtils.getSessionFactory();
     }
 
     /**
@@ -23,15 +24,20 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
      */
     @Override
     public void create(User user) {
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
             }
         }
     }
@@ -43,14 +49,20 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
      */
     @Override
     public void update(User user) {
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
             }
         }
     }
@@ -61,14 +73,21 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
      * @param user removed user.
      */
     @Override
-    public void remove(User user) {        Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+    public void remove(User user) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.remove(user);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
             }
         }
     }
@@ -81,9 +100,10 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        User user = null;
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             users = session.createQuery("SELECT u FROM User u", User.class).getResultList();
             transaction.commit();
@@ -91,6 +111,10 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
             }
         }
         return users;
@@ -105,8 +129,10 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
     @Override
     public User findByLogin(String login) {
         User user = null;
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             user = session.createQuery("SELECT u FROM User u WHERE u.login = :login", User.class)
                 .setParameter("login", login).getSingleResult();
@@ -116,14 +142,20 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
         }
         return user;
     }
 
     public User findById(Long id) {
         User user = null;
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             user = session.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
                 .setParameter("id", id).getSingleResult();
@@ -132,6 +164,10 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
             }
         }
         return user;
@@ -147,8 +183,10 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
     @Override
     public User findByEmail(String email) {
         User user = null;
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             user = session.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
                 .setParameter("email", email).getSingleResult();
@@ -157,6 +195,10 @@ public class HibernateUserDao extends AbstractDao implements UserDao {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
             }
         }
         return user;

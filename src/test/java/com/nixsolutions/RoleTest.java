@@ -2,7 +2,6 @@ package com.nixsolutions;
 
 import com.nixsolutions.dao.HibernateRoleDao;
 import com.nixsolutions.entity.Role;
-import com.nixsolutions.utils.HibernateUtils;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;

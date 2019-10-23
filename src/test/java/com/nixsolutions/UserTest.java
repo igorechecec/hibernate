@@ -59,7 +59,7 @@ public class UserTest extends DbTestConfig {
 
     @Test
     public void testUpdateUser() throws Exception {
-        User user = new User();
+        User user;
         Role role = new Role();
         role.setId(2);
         role.setName("admin");
@@ -101,10 +101,7 @@ public class UserTest extends DbTestConfig {
         Role role1 = new Role();
         role1.setId(2);
         role1.setName("admin");
-        Object[] params = {(long) 1, "john@smith", "1234", "john.smith@gmail.com",
-            "john", "smith", Date.valueOf("1999-01-01"), role};
-        Object[] params1 = {(long) 2, "sara@millton", "abcd", "sara.millton@gmail.com",
-            "sara", "millton", Date.valueOf("1985-01-01"), role1};
+
         List<User> expectedUsers = getListOfExpectedUsers();
         List<User> actualUsers = userDao.findAll();
 

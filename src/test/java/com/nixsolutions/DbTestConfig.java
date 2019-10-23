@@ -38,14 +38,6 @@ public class DbTestConfig {
     }
 
     public DbTestConfig() {
-//        try {
-//            prop.load(getClass().getClassLoader().
-//                getResourceAsStream("database.properties"));
-//
-//        } catch (IOException e) {
-//            logger.error("Can't load properties", e);
-//            throw new RuntimeException(e);
-//        }
         Configuration configuration = new Configuration().configure();
         prop = configuration.getProperties();
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS,
@@ -56,8 +48,6 @@ public class DbTestConfig {
             prop.getProperty("connection.username"));
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD,
             prop.getProperty("connection.password"));
-//        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA,
-//            "testdb");
 
     }
 

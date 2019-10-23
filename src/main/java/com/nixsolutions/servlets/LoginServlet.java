@@ -26,7 +26,6 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         HibernateUserDao userDao = new HibernateUserDao();
         User user = userDao.findByLogin(login);
-        //System.out.println(user.getRole().getName());
         if (user != null && user.getPassword().equals(password)) {
             if (user.getRole().getName().equals("Admin")) {
                 session.setAttribute("auth_admin", user.getLogin());
@@ -36,8 +35,8 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("/");
             }
         } else {
-            session.setAttribute("error", "User data incorrect!");
-            resp.sendRedirect("/error");
+            req.setAttribute("message", "User data incorrect");
+            req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);
         }
     }
 }

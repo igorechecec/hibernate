@@ -13,13 +13,13 @@
             <div class="form-group row">
                 <label for="input-email" class="col-sm-2 col-form-label">Login</label>
                 <div class="col-sm-10">
-                    <input name="login" type="text" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="Enter login">
+                    <input name="login" type="text" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="input-password" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
-                    <input name="password" type="password" class="form-control" id="input-password" placeholder="Enter password">
+                    <input name="password" type="password" class="form-control" id="input-password" placeholder="" required>
                 </div>
             </div>
             <div class="text-right mb-3">

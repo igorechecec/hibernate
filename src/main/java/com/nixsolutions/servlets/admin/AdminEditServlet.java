@@ -24,7 +24,15 @@ public class AdminEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateUserDao userDao = new HibernateUserDao();
         if (req.getParameter("id") != null) {
-            Long id = Long.valueOf(req.getParameter("id"));
+            Long id = null;
+            try {
+                id = Long.valueOf(req.getParameter("id"));
+            } catch (NumberFormatException e) {
+                req.getSession(false).setAttribute("error", "Invalid id parameter");
+                resp.sendRedirect("/error");
+                return;
+            }
+
             User user = userDao.findById(id);
             if (user != null) {
                 int i = user.getRole().getName().equals("Admin") ? 1 : 0;

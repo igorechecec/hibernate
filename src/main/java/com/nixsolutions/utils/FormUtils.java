@@ -15,7 +15,7 @@ public class FormUtils {
         String[] formParams = {"login", "password", "email", "firstname",
             "lastname", "birthday", "role"};
         for (String param: formParams) {
-            if (StringUtils.isEmpty(req.getParameter(param))) {
+            if (StringUtils.isBlank(req.getParameter(param))) {
                 req.getSession(false).setAttribute("error",
                     "Field " + param + " should be define");
                 return false;

@@ -37,7 +37,7 @@ public class Role {
     /**
      * Name of role.
      */
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)

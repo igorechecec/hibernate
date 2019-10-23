@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class AuthFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(AuthFilter.class.getSimpleName());
-    FilterConfig config;
+    private FilterConfig config;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -44,10 +44,8 @@ public class AuthFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else if (fullPath.equals("/")){
                 resp.sendRedirect("/login");
-                return;
             } else {
                 resp.sendError(404);
-                return;
             }
         } else if (fullPath.equals("/logout")) {
             logger.trace("logout filter");
